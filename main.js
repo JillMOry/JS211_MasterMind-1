@@ -8,6 +8,7 @@ const rl = readline.createInterface({
 });
 
 let board = [];
+let boardGuessLimit = 10;
 let solution = "";
 let letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
@@ -55,6 +56,15 @@ const generateHint = (guess) => {
 	return hint;
 };
 
+function tenGuesses() {
+	//Spec 4 - End the game After 10 incorrect guesses,
+	//if the board length equals 10, return 'You ran out of turns! The solution was ' and the solution.
+	//Otherwise, return 'Guess again.'.
+	if (board.length >= boardGuessLimit) {
+		alert("you have reached your maximum guesses");
+	}
+}
+
 // Spec 4 - End the game After 10 incorrect guesses, if the board length equals 10, return 'You ran out of turns! The solution was ' and the solution. Otherwise, return 'Guess again.'.
 
 const mastermind = (guess) => {
@@ -75,6 +85,7 @@ const getPrompt = () => {
 	rl.question("guess: ", (guess) => {
 		mastermind(guess);
 		printBoard();
+		tenGuesses();
 		getPrompt();
 	});
 };
@@ -102,7 +113,7 @@ if (typeof describe === "function") {
 		});
 	});
 } else {
-	generateSolution(guess);
+	generateSolution();
 	getPrompt();
 }
 
